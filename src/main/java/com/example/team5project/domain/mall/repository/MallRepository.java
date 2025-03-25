@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface MallRepository extends JpaRepository<Mall, Long> {
 
-    List<Mall> findByTotalRating(Long totalRating);
+    List<Mall> findByTotalRating(Integer totalRating);
 
     List<Mall> findByStoreStatus(String storeStatus);
 
     @Query("SELECT m FROM Mall m WHERE (:totalRating IS NULL OR m.totalRating = :totalRating)" + "AND (:storeStatus IS NULL OR m.storeStatus = :storeStatus)")
-    List<Mall> findByTotalRatingAndStoreStatus(@Param("totalRating") Long totalRating, @Param("storeStatus") String storeStatus);
+    List<Mall> findByTotalRatingAndStoreStatus(@Param("totalRating") Integer totalRating, @Param("storeStatus") String storeStatus);
 }

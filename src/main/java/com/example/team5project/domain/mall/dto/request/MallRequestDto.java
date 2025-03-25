@@ -6,7 +6,7 @@ import lombok.Getter;
 public class MallRequestDto {
 
     private String storeName;
-    private Long totalRating;
+    private Integer totalRating;
     private String storeStatus;
     private String monitoringDate;
 }

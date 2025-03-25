@@ -20,7 +20,7 @@ public class MallService {
     public List<MallResponseDto> getAllMalls() {
         List<Mall> malls = mallRepository.findAll();
 
-        List<MallResponseDto> mallResponseDtos = new ArrayList<MallResponseDto>();
+        List<MallResponseDto> mallResponseDtos = new ArrayList<>();
         for (Mall mall : malls) {
             mallResponseDtos.add(new MallResponseDto(mall));
         }
@@ -28,7 +28,7 @@ public class MallService {
     }
 
     @Transactional(readOnly = true)
-    public List<MallResponseDto> getMallsByTotalRating(Long totalRating) {
+    public List<MallResponseDto> getMallsByTotalRating(Integer totalRating) {
         List<Mall> malls = mallRepository.findByTotalRating(totalRating);
 
         List<MallResponseDto> mallResponseDtos = new ArrayList<>();
@@ -50,7 +50,7 @@ public class MallService {
     }
 
     @Transactional(readOnly = true)
-    public List<MallResponseDto> getMallsByTotalRatingAndStoreStatus(Long totalRating, String storeStatus) {
+    public List<MallResponseDto> getMallsByTotalRatingAndStoreStatus(Integer totalRating, String storeStatus) {
         List<Mall> malls = mallRepository.findByTotalRatingAndStoreStatus(totalRating, storeStatus);
 
         List<MallResponseDto> mallResponseDtos = new ArrayList<>();

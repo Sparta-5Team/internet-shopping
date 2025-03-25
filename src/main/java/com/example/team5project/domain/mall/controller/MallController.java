@@ -23,7 +23,7 @@ public class MallController {
     }
 
     @GetMapping("/malls/totalRating/{totalRating}")
-    public ResponseEntity<List<MallResponseDto>> getMallsByTotalRating(@PathVariable Long totalRating) {
+    public ResponseEntity<List<MallResponseDto>> getMallsByTotalRating(@PathVariable Integer totalRating) {
         return ResponseEntity.ok(mallService.getMallsByTotalRating(totalRating));
     }
 
@@ -32,8 +32,8 @@ public class MallController {
         return ResponseEntity.ok(mallService.getMallsByStoreStatus(storeStatus));
     }
 
-    @GetMapping("/malls/ratingAndStatus")
-    public ResponseEntity<List<MallResponseDto>> getMallsByRatingAndStatus(@RequestParam(required = false) Long totalRating, @RequestParam(required = false) String storeStatus) {
+    @GetMapping("/malls/filter")
+    public ResponseEntity<List<MallResponseDto>> getMallsByRatingAndStatus(@RequestParam(required = false) Integer totalRating, @RequestParam(required = false) String storeStatus) {
         return ResponseEntity.ok(mallService.getMallsByTotalRatingAndStoreStatus(totalRating, storeStatus));
     }
 }
