@@ -19,7 +19,7 @@ public class StoreService {
     private final StoreRepository storeRepository;
 
     @Transactional
-    public List<Store> getFilteredStores(Double rating, StoreStatus status) {
+    public List<Store> getFilteredStores(Integer rating, StoreStatus status) {
         Specification<Store> spec = Specification.where(StoreSpecification.orderByMonitoringDateDesc());
 
         if (rating != null) {
