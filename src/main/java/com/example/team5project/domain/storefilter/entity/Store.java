@@ -27,4 +27,11 @@ public class Store {
 
     @Column(name = "monitoring_date")
     private LocalDate monitoringDate; // 모니터링 날짜
+
+    public Store(String name, Integer rating, StoreStatus status, LocalDate monitoringDate) {
+        this.name = name;
+        this.rating = rating;
+        this.status = status;
+        this.monitoringDate = monitoringDate;
+    }
 }
