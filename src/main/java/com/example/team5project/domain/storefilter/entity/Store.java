@@ -3,12 +3,14 @@ package com.example.team5project.domain.storefilter.entity;
 import com.example.team5project.domain.storefilter.status.StoreStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
 @Getter
 @Table(name = "store")
+@NoArgsConstructor
 public class Store {
 
     @Id
