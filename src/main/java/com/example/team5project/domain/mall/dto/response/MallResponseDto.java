@@ -3,6 +3,8 @@ package com.example.team5project.domain.mall.dto.response;
 import com.example.team5project.domain.mall.entity.Mall;
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 @Getter
 public class MallResponseDto {
 
@@ -10,7 +12,7 @@ public class MallResponseDto {
     private final String storeName;
     private final Integer totalRating;
     private final String storeStatus;
-    private final String monitoringDate;
+    private final LocalDate monitoringDate;
 
     public MallResponseDto(Mall mall) {
         this.id = mall.getId();

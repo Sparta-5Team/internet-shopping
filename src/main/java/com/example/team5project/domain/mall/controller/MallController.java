@@ -23,17 +23,20 @@ public class MallController {
     }
 
     @GetMapping("/malls/totalRating/{totalRating}")
-    public ResponseEntity<List<MallResponseDto>> getMallsByTotalRating(@PathVariable Integer totalRating) {
-        return ResponseEntity.ok(mallService.getMallsByTotalRating(totalRating));
+    public ResponseEntity<List<MallResponseDto>> getMallsByTotalRating(@PathVariable Integer totalRating, @RequestParam(defaultValue = "0") int page) {
+        return ResponseEntity.ok(mallService.getMallsByTotalRating(totalRating, page));
     }
 
     @GetMapping("/malls/storeStatus/{storeStatus}")
-    public ResponseEntity<List<MallResponseDto>> getMallsByStoreStatus(@PathVariable String storeStatus) {
-        return ResponseEntity.ok(mallService.getMallsByStoreStatus(storeStatus));
+    public ResponseEntity<List<MallResponseDto>> getMallsByStoreStatus(@PathVariable String storeStatus, @RequestParam(defaultValue = "0") int page) {
+        return ResponseEntity.ok(mallService.getMallsByStoreStatus(storeStatus, page));
     }
 
     @GetMapping("/malls/filter")
-    public ResponseEntity<List<MallResponseDto>> getMallsByRatingAndStatus(@RequestParam(required = false) Integer totalRating, @RequestParam(required = false) String storeStatus) {
-        return ResponseEntity.ok(mallService.getMallsByTotalRatingAndStoreStatus(totalRating, storeStatus));
+    public ResponseEntity<List<MallResponseDto>> getMallsByRatingAndStatus(
+            @RequestParam(required = false) Integer totalRating,
+            @RequestParam(required = false) String storeStatus,
+            @RequestParam(defaultValue = "0") int page) {
+        return ResponseEntity.ok(mallService.getMallsByTotalRatingAndStoreStatus(totalRating, storeStatus, page));
     }
 }

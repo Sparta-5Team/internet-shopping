@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -20,9 +22,9 @@ public class Mall {
     @Column(name = "store_status")
     private String storeStatus;
     @Column(name = "monitoring_date")
-    private String monitoringDate;
+    private LocalDate monitoringDate;
 
-    public Mall(String storeName, Integer totalRating, String storeStatus, String monitoringDate) {
+    public Mall(String storeName, Integer totalRating, String storeStatus, LocalDate monitoringDate) {
         this.storeName = storeName;
         this.totalRating = totalRating;
         this.storeStatus = storeStatus;
