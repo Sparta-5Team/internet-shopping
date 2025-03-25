@@ -4,9 +4,10 @@ import com.example.team5project.domain.storefilter.entity.Store;
 import com.example.team5project.domain.storefilter.status.StoreStatus;
 import org.springframework.data.jpa.domain.Specification;
 
+
 public class StoreSpecification {
 
-    public static Specification<Store> filterByRating(Double rating) {
+    public static Specification<Store> filterByRating(Integer rating) {
         return ((root, query, criteriaBuilder) ->
                 rating != null ? criteriaBuilder.equal(root.get("rating"), rating) : null);
     }
