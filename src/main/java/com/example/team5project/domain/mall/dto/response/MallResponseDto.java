@@ -1,6 +1,6 @@
-package com.example.team5project.domain.dto;
+package com.example.team5project.domain.mall.dto.response;
 
-import com.example.team5project.domain.entity.Mall;
+import com.example.team5project.domain.mall.entity.Mall;
 import lombok.Getter;
 
 @Getter

@@ -1,8 +1,7 @@
-package com.example.team5project.domain.controller;
+package com.example.team5project.domain.mall.controller;
 
-import com.example.team5project.domain.dto.MallResponseDto;
-import com.example.team5project.domain.entity.Mall;
-import com.example.team5project.domain.service.MallService;
+import com.example.team5project.domain.mall.dto.response.MallResponseDto;
+import com.example.team5project.domain.mall.service.MallService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.example.team5project.domain.entity;
+package com.example.team5project.domain.mall.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

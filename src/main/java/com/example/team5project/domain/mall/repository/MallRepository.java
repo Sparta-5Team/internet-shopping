@@ -1,6 +1,6 @@
-package com.example.team5project.domain.repository;
+package com.example.team5project.domain.mall.repository;
 
-import com.example.team5project.domain.entity.Mall;
+import com.example.team5project.domain.mall.entity.Mall;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

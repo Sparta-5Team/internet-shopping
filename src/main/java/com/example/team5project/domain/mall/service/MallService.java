@@ -1,8 +1,8 @@
-package com.example.team5project.domain.service;
+package com.example.team5project.domain.mall.service;
 
-import com.example.team5project.domain.dto.MallResponseDto;
-import com.example.team5project.domain.entity.Mall;
-import com.example.team5project.domain.repository.MallRepository;
+import com.example.team5project.domain.mall.dto.response.MallResponseDto;
+import com.example.team5project.domain.mall.entity.Mall;
+import com.example.team5project.domain.mall.repository.MallRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

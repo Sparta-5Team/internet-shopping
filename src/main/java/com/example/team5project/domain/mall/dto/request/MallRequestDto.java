@@ -1,4 +1,4 @@
-package com.example.team5project.domain.dto;
+package com.example.team5project.domain.mall.dto.request;
 
 import lombok.Getter;
 
