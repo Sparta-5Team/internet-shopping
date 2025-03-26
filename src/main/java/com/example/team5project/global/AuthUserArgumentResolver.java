@@ -2,6 +2,7 @@ package com.example.team5project.global;
 
 import com.example.team5project.domain.auth.annotation.Auth;
 import com.example.team5project.domain.auth.entity.AuthUser;
+import com.example.team5project.domain.user.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.Nullable;
@@ -38,7 +39,8 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
         Long userId = (Long) request.getAttribute("userId");
         String email = (String) request.getAttribute("email");
         String name = (String) request.getAttribute("name");
+        UserRole userRole = (UserRole) request.getAttribute("userRole");
 
-        return new AuthUser(userId, email, name);
+        return new AuthUser(userId, email, name, userRole);
     }
 }
