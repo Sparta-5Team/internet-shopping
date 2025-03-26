@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class SigninRequest implements UserRequest {
+public class SigninRequest {
 
     @NotBlank
     @Email(message = "이메일 형식이어야 합니다.")
