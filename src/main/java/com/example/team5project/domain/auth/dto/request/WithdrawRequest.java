@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class WithdrawRequest implements UserRequest {
+public class WithdrawRequest {
 
     @NotBlank
     @Email(message = "이메일 형식이어야 합니다.")
