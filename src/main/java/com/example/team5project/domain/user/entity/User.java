@@ -1,5 +1,6 @@
 package com.example.team5project.domain.user.entity;
 
+import com.example.team5project.domain.user.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -24,9 +25,12 @@ public class User {
     @Column
     private String password;
 
-    public User(String email, String name, String encodedPassword) {
+    private UserRole userRole;
+
+    public User(String email, String name, String encodedPassword, UserRole userRole) {
         this.email = email;
         this.name = name;
         this.password = encodedPassword;
+        this.userRole = userRole;
     }
 }

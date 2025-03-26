@@ -2,12 +2,13 @@ package com.example.team5project.domain.auth.controller;
 
 import com.example.team5project.domain.auth.dto.request.SigninRequest;
 import com.example.team5project.domain.auth.dto.request.SignupRequest;
-import com.example.team5project.domain.auth.dto.request.WithdrawRequest;
 import com.example.team5project.domain.auth.dto.response.SigninResponse;
 import com.example.team5project.domain.auth.dto.response.SignupResponse;
+import com.example.team5project.domain.auth.entity.AuthUser;
 import com.example.team5project.domain.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,7 +29,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/withdraw")
-    public void withdraw(@RequestBody WithdrawRequest withdrawRequest) {
-        authService.withdraw(withdrawRequest);
+    public void withdraw(@AuthenticationPrincipal AuthUser authUser) {
+        authService.withdraw(authUser.getId());
     }
 }

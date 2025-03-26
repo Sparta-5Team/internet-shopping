@@ -10,13 +10,13 @@ package com.example.team5project.domain.auth.service;
 //import com.example.team5project.domain.user.repository.UserRepository;
 import com.example.team5project.domain.auth.dto.request.SigninRequest;
 import com.example.team5project.domain.auth.dto.request.SignupRequest;
-import com.example.team5project.domain.auth.dto.request.WithdrawRequest;
 import com.example.team5project.domain.auth.dto.response.SigninResponse;
 import com.example.team5project.domain.auth.dto.response.SignupResponse;
 import com.example.team5project.domain.user.entity.User;
+import com.example.team5project.domain.user.enums.UserRole;
 import com.example.team5project.domain.user.repository.UserRepository;
 import com.example.team5project.global.JwtUtil;
-import com.example.team5project.global.PasswordEncoder;
+import com.example.team5project.global.filter.SecurityConfig;
 import com.sun.jdi.request.InvalidRequestStateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class AuthService {
 
     private final JwtUtil jwtUtil;
-    private final PasswordEncoder passwordEncoder;
+    private final SecurityConfig securityconfig;
     private final UserRepository userRepository;
 
     @Transactional
@@ -41,10 +41,11 @@ public class AuthService {
         }
 
         // 비밀번호 암호화.
-        String encodedPassword = passwordEncoder.encode(signupRequest.getPassword());
+        String encodedPassword = securityconfig.passwordEncoder().encode(signupRequest.getPassword());
+        UserRole userRole = UserRole.of("ROLE_USER");
 
         // 해당 유저 회원가입.
-        User user = new User(signupRequest.getEmail(), signupRequest.getName(), encodedPassword);
+        User user = new User(signupRequest.getEmail(), signupRequest.getName(), encodedPassword, userRole);
         User savedUser = userRepository.save(user);
 
         return new SignupResponse(savedUser.getId(), savedUser.getEmail(), savedUser.getName());
@@ -57,25 +58,23 @@ public class AuthService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "이메일이 존재하지않습니다.")
         );
 
-        if (!passwordEncoder.matches(request.getPassword(), foundUser.getPassword())) {
+        if (!securityconfig.passwordEncoder().matches(request.getPassword(), foundUser.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지않습니다");
         }
 
         //jwt 발급 및 클라이언트 측으로 반환.
-        String bearerJwt = jwtUtil.createToken(foundUser.getId(), foundUser.getEmail(), foundUser.getName());
+        String bearerJwt = jwtUtil.createToken(foundUser.getId(), foundUser.getEmail(), foundUser.getName(), foundUser.getUserRole());
         String bearerToken = jwtUtil.substringToken(bearerJwt);
 
         return new SigninResponse(bearerToken);
     }
 
     @Transactional
-    public void withdraw(WithdrawRequest request) {
-        User foundUser = userRepository.findByEmail(request.getEmail()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 이메일의 유저가 존재하지 않습니다.")
+    public void withdraw(Long id) { // 로그인을 하고 그 사용자가 회원 탈퇴하게 변경
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자가 존재하지않습니다.")
         );
-        if (!passwordEncoder.matches(request.getPassword(), foundUser.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지않습니다.");
-        }
-        userRepository.delete(foundUser);
+
+        userRepository.delete(user);
     }
 }
