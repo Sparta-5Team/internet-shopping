@@ -63,9 +63,9 @@ public class AuthService {
 
         //jwt 발급 및 클라이언트 측으로 반환.
         String bearerJwt = jwtUtil.createToken(foundUser.getId(), foundUser.getEmail(), foundUser.getName());
-        String barerToken = jwtUtil.substringToken(bearerJwt);
+        String bearerToken = jwtUtil.substringToken(bearerJwt);
 
-        return new SigninResponse(barerToken);
+        return new SigninResponse(bearerToken);
     }
 
     @Transactional
