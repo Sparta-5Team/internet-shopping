@@ -1,6 +1,6 @@
-package com.example.team5project.domain.openai.controller;
+package com.example.team5project.domain.openapi.controller;
 
-import com.example.team5project.domain.openai.service.OpenApiService;
+import com.example.team5project.domain.openapi.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
