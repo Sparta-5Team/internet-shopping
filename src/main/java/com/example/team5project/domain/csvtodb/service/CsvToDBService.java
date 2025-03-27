@@ -1,7 +1,6 @@
 package com.example.team5project.domain.csvtodb.service;
 
 import com.example.team5project.domain.csvtodb.DatabaseUtil;
-import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import lombok.RequiredArgsConstructor;
