@@ -27,6 +27,8 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath password = createString("password");
 
+    public final EnumPath<com.example.team5project.domain.user.enums.UserRole> userRole = createEnum("userRole", com.example.team5project.domain.user.enums.UserRole.class);
+
     public QUser(String variable) {
         super(User.class, forVariable(variable));
     }
