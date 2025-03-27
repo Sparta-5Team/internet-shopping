@@ -3,6 +3,7 @@ package com.example.team5project.domain.openai.controller;
 import com.example.team5project.domain.openai.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
@@ -18,10 +19,11 @@ public class OpenApiController {
     private final OpenApiService openApiService;
 
     @GetMapping("/collection-openapi")
-    public String callOpenApi() throws IOException {
+    public String callOpenApi(@RequestParam(name = "page", required = true) int page,
+                              @RequestParam(name = "size", required = true) int size) throws IOException {
         StringBuilder result = new StringBuilder();
 
-        String urlStr = "http://openAPI.seoul.go.kr:8088/4864566164616f6434357a774e5962/json/ServiceInternetShopInfo/1/100";
+        String urlStr = "http://openAPI.seoul.go.kr:8088/4864566164616f6434357a774e5962/json/ServiceInternetShopInfo/"+page+"/"+size;
         URL url = new URL(urlStr);
 
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
