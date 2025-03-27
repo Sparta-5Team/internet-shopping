@@ -1,7 +1,7 @@
-package com.example.team5project.domain.openai.service;
+package com.example.team5project.domain.openapi.service;
 
-import com.example.team5project.domain.openai.entity.OpenApi;
-import com.example.team5project.domain.openai.repository.OpenApiRepository;
+import com.example.team5project.domain.openapi.entity.OpenApi;
+import com.example.team5project.domain.openapi.repository.OpenApiRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
