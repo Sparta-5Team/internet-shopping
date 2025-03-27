@@ -45,4 +45,30 @@ public class OpenApiController {
 
         return "Success";
     }
+
+    @GetMapping("/search-openapi")
+    public String searchOpenApi(@RequestParam(name = "page") int page,
+                               @RequestParam(name = "size") int size) throws IOException {
+        StringBuilder result = new StringBuilder();
+
+        String urlStr = "http://openAPI.seoul.go.kr:8088/4864566164616f6434357a774e5962/xml/ServiceInternetShopInfo/"+page+"/"+size;
+        URL url = new URL(urlStr);
+
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setRequestMethod("GET");
+
+        BufferedReader br;
+
+        br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+
+        String returnLine;
+
+        while ((returnLine = br.readLine()) != null) {
+            result.append(returnLine+"\n\r");
+        }
+
+        urlConnection.disconnect();
+
+        return result.toString();
+    }
 }
