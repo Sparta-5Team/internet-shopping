@@ -19,14 +19,14 @@ import java.util.List;
 public class CsvToDBService {
 
     private static final String CSV_FILE_PATH = "D:/workspace/internet-shopping/src/main/java/com/example/team5project/global/shopping.csv";
-    private static final String ISERT_QUERY = "INSERT INTO csvtodb (name, rating, status, monitoringDate) VALUES (?, ?, ?, ?)";
+    private static final String INSERT_QUERY = "INSERT INTO csvtodb (name, rating, status, monitoringDate) VALUES (?, ?, ?, ?)";
     private static final int BATCH_SIZE = 100;
 
     public void insertMallData() {
         try (
                 Connection connection = DatabaseUtil.getConnection();
                 CSVReader reader = new CSVReader(new FileReader(CSV_FILE_PATH));
-                PreparedStatement preparedStatement =connection.prepareStatement(ISERT_QUERY)
+                PreparedStatement preparedStatement =connection.prepareStatement(INSERT_QUERY)
         ) {
             List<String[]> records = reader.readAll();
 
@@ -96,14 +96,14 @@ public class CsvToDBService {
 
 // 테스트용 코드 개선 전 코드
 //    private static final String CSV_FILE_PATH = "D:/workspace/internet-shopping/src/main/java/com/example/team5project/global/shopping.csv";
-//    private static final String ISERT_QUERY = "INSERT INTO csvtodb (name, rating, status, monitoringDate) VALUES (?, ?, ?, ?)";
+//    private static final String INSERT_QUERY = "INSERT INTO csvtodb (name, rating, status, monitoringDate) VALUES (?, ?, ?, ?)";
 //
 //
 //    public void insertMallData() {
 //        try (
 //                Connection connection = DatabaseUtil.getConnection();
 //                CSVReader reader = new CSVReader(new FileReader(CSV_FILE_PATH));
-//                PreparedStatement preparedStatement =connection.prepareStatement(ISERT_QUERY)
+//                PreparedStatement preparedStatement =connection.prepareStatement(INSERT_QUERY)
 //        ) {
 //            List<String[]> records = reader.readAll();
 //
