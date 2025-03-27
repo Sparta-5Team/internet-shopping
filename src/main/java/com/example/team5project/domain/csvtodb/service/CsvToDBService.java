@@ -93,6 +93,8 @@ public class CsvToDBService {
     }
 }
 
+
+// 테스트용 코드 개선 전 코드
 //    private static final String CSV_FILE_PATH = "D:/workspace/internet-shopping/src/main/java/com/example/team5project/global/shopping.csv";
 //    private static final String ISERT_QUERY = "INSERT INTO csvtodb (name, rating, status, monitoringDate) VALUES (?, ?, ?, ?)";
 //
