@@ -1,5 +1,6 @@
 package com.example.team5project.domain.openapi.service;
 
+import com.example.team5project.domain.openapi.dto.OpenApiResponse;
 import com.example.team5project.domain.openapi.entity.OpenApi;
 import com.example.team5project.domain.openapi.repository.OpenApiRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -63,4 +67,13 @@ public class OpenApiService {
         }
     }
 
+    public List<OpenApiResponse> findall() {
+        List<OpenApi> all = openApiRepository.findAll();
+        List<OpenApiResponse> dtos = new ArrayList<>();
+        for (OpenApi openApi : all) {
+            dtos.add(new OpenApiResponse(openApi.getId(), openApi.getCompany(), openApi.getEmail(), openApi.getShopname(), openApi.getStatin()));
+        }
+
+        return dtos;
+    }
 }

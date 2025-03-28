@@ -9,7 +9,9 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-@Table(name = "store")
+@Table(name = "store", indexes = {
+        @Index(name = "idx_name", columnList = "name")
+})
 @NoArgsConstructor
 public class Store {
 

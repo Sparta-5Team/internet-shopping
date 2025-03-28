@@ -1,7 +1,10 @@
 package com.example.team5project.domain.openapi.controller;
 
+import com.example.team5project.domain.openapi.dto.OpenApiResponse;
 import com.example.team5project.domain.openapi.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -70,5 +74,10 @@ public class OpenApiController {
         urlConnection.disconnect();
 
         return result.toString();
+    }
+
+    @GetMapping("/find-openapi")
+    public ResponseEntity<List<OpenApiResponse>> findall() {
+        return ResponseEntity.ok(openApiService.findall());
     }
 }

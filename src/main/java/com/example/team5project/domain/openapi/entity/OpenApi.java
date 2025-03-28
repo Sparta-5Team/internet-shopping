@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Entity
-@Table(name = "openapi")
+@Table(name = "openapi", indexes = {
+        @Index(name = "idx_comapny", columnList = "company")
+})
 @Getter
 @Builder
 @AllArgsConstructor
