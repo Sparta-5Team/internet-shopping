@@ -1,6 +1,7 @@
 package com.example.team5project.domain.csvtodb.service;
 
-import com.example.team5project.domain.csvtodb.DatabaseUtil;
+import com.example.team5project.domain.csvtodb.entity.CsvToDB;
+import com.example.team5project.domain.csvtodb.repository.CsvToDBRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,16 +19,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CsvToDBService {
 
+    private final CsvToDBRepository csvToDBRepository;
     private static final String CSV_FILE_PATH = "D:/workspace/internet-shopping/src/main/java/com/example/team5project/global/shopping.csv";
-    private static final String INSERT_QUERY = "INSERT INTO csvtodb (name, rating, status, monitoringDate) VALUES (?, ?, ?, ?)";
     private static final int BATCH_SIZE = 100;
 
     public void insertMallData() {
-        try (
-                Connection connection = DatabaseUtil.getConnection();
-                CSVReader reader = new CSVReader(new FileReader(CSV_FILE_PATH));
-                PreparedStatement preparedStatement =connection.prepareStatement(INSERT_QUERY)
-        ) {
+        try (CSVReader reader = new CSVReader(new FileReader(CSV_FILE_PATH));) {
             List<String[]> records = reader.readAll();
 
             String[] header = records.get(0);
@@ -36,9 +33,9 @@ public class CsvToDBService {
             int statusIndex = findColumnIndex(header, "업소상태");
             int dateIndex = findColumnIndex(header, "모니터링날짜");
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            connection.setAutoCommit(false);
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+            List<CsvToDB> batchList = new ArrayList<>();
             int batchCount = 0;
 
             for (int i = 1; i < records.size(); i++) { // 헤더 제외
@@ -49,36 +46,30 @@ public class CsvToDBService {
                     continue;
                 }
 
-                preparedStatement.setString(1 , record[nameIndex]); // 상호 -> name
-                preparedStatement.setInt(2, Integer.parseInt(record[ratingIndex])); // 전체평가 -> rating
-                preparedStatement.setString(3, record[statusIndex]); // 업소상태 -> status
+                String name = record[nameIndex]; // 상호 -> name
+                Integer rating = Integer.parseInt(record[ratingIndex]); // 전체평가 -> rating
+                String status = record[statusIndex]; // 업소상태 -> status
+                LocalDate monitoringDate = LocalDate.parse(record[dateIndex], dateFormat); // 모니터링날짜 -> monitoringDate
 
-                java.util.Date parsedDate = dateFormat.parse(record[dateIndex]);
-                preparedStatement.setDate(4, new Date(parsedDate.getTime())); // 모니터링날짜 -> monitoringDate
-
-                preparedStatement.addBatch();
+                CsvToDB csvToDB = new CsvToDB(name, rating, status, monitoringDate);
+                batchList.add(csvToDB);
                 batchCount++;
 
                 if (batchCount % BATCH_SIZE == 0) {
-                    preparedStatement.executeBatch();
-                    preparedStatement.clearBatch();
-                    connection.commit();
-                    batchCount = 0;
+                    csvToDBRepository.saveAll(batchList);
+                    batchList.clear();
                 }
             }
 
-            if (batchCount > 0) {
-                preparedStatement.executeBatch();
-                connection.commit();
+            if (!batchList.isEmpty()) {
+                csvToDBRepository.saveAll(batchList);
             }
 
 
         } catch (IOException e) {
             System.err.println("CSV 파일 읽기 오류" + e.getMessage());
-        } catch (SQLException e) {
-            System.err.println("SQL 오류" + e.getMessage());
-        } catch (ParseException e) {
-            System.err.println("날짜 변환 오류" + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("데이터 형식 오류" + e.getMessage());
         } catch (CsvException e) {
             System.err.println("CSV parsing 오류" + e.getMessage());
         }
@@ -96,16 +87,14 @@ public class CsvToDBService {
 
 
 // 테스트용 코드 개선 전 코드
+//
+//    private final CsvToDBRepository csvToDBRepository;
 //    private static final String CSV_FILE_PATH = "D:/workspace/internet-shopping/src/main/java/com/example/team5project/global/shopping.csv";
-//    private static final String INSERT_QUERY = "INSERT INTO csvtodb (name, rating, status, monitoringDate) VALUES (?, ?, ?, ?)";
 //
 //
 //    public void insertMallData() {
-//        try (
-//                Connection connection = DatabaseUtil.getConnection();
-//                CSVReader reader = new CSVReader(new FileReader(CSV_FILE_PATH));
-//                PreparedStatement preparedStatement =connection.prepareStatement(INSERT_QUERY)
-//        ) {
+//        try (CSVReader reader = new CSVReader(new FileReader(CSV_FILE_PATH));) {
+//
 //            List<String[]> records = reader.readAll();
 //
 //            String[] header = records.get(0);
@@ -114,8 +103,9 @@ public class CsvToDBService {
 //            int statusIndex = findColumnIndex(header, "업소상태");
 //            int dateIndex = findColumnIndex(header, "모니터링날짜");
 //
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            connection.setAutoCommit(false);
+//            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//            List<CsvToDB> batchList = new ArrayList<>();
 //
 //            for (int i = 1; i < records.size(); i++) { // 헤더 제외
 //                String[] record = records.get(i);
@@ -125,27 +115,24 @@ public class CsvToDBService {
 //                    continue;
 //                }
 //
-//                preparedStatement.setString(1 , record[nameIndex]); // 상호 -> name
-//                preparedStatement.setInt(2, Integer.parseInt(record[ratingIndex])); // 전체평가 -> rating
-//                preparedStatement.setString(3, record[statusIndex]); // 업소상태 -> status
+//                String name = record[nameIndex]; // 상호 -> name
+//                Integer rating = Integer.parseInt(record[ratingIndex]); // 전체평가 -> rating
+//                String status = record[statusIndex]; // 업소상태 -> status
+//                LocalDate monitoringDate = LocalDate.parse(record[dateIndex], dateFormat); // 모니터링날짜 -> monitoringDate
 //
-//                java.util.Date parsedDate = dateFormat.parse(record[dateIndex]);
-//                preparedStatement.setDate(4, new Date(parsedDate.getTime())); // 모니터링날짜 -> monitoringDate
-//
-//                preparedStatement.addBatch();
+//                CsvToDB csvToDB = new CsvToDB(name, rating, status, monitoringDate);
+//                batchList.add(csvToDB);
 //            }
+//            csvToDBRepository.saveAll(batchList);
 //
-//            preparedStatement.executeBatch();
-//            connection.commit();
+//
 //
 //        } catch (IOException e) {
 //            System.err.println("CSV 파일 읽기 오류" + e.getMessage());
-//        } catch (SQLException e) {
-//            System.err.println("SQL 오류" + e.getMessage());
-//        } catch (ParseException e) {
-//            System.err.println("날짜 변환 오류" + e.getMessage());
+//        } catch (NumberFormatException e) {
+//            System.err.println("데이터 형식 오류" + e.getMessage());
 //        } catch (CsvException e) {
-//            System.err.println("CSV parsing 오류");
+//            System.err.println("CSV parsing 오류" + e.getMessage());
 //        }
 //    }
 //
