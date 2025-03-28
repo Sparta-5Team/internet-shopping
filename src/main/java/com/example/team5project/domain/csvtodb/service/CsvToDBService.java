@@ -61,6 +61,7 @@ public class CsvToDBService {
 
                 if (batchCount % BATCH_SIZE == 0) {
                     preparedStatement.executeBatch();
+                    preparedStatement.clearBatch();
                     connection.commit();
                     batchCount = 0;
                 }

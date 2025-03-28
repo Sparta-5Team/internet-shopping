@@ -15,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QOpenApi extends EntityPathBase<OpenApi> {
 
-    private static final long serialVersionUID = -740754029L;
+    private static final long serialVersionUID = 2023319761L;
 
     public static final QOpenApi openApi = new QOpenApi("openApi");
 
