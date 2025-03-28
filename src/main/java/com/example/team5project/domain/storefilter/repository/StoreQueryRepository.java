@@ -44,4 +44,11 @@ public class StoreQueryRepository {
     private BooleanExpression cursorCondition(Long cursorId) {
         return cursorId != null ? store.id.lt(cursorId) : null;
     }
+
+    public List<Store> findAll(Integer rating, StoreStatus status) {
+        return queryFactory.selectFrom(store)
+                .where(eqRating(rating), eqStatus(status))
+                .orderBy(store.monitoringDate.desc())
+                .fetch();
+    }
 }

@@ -5,10 +5,12 @@ import com.example.team5project.domain.storefilter.dto.request.StoreFilterReques
 import com.example.team5project.domain.storefilter.dto.response.StoreResponse; // 패키지 수정
 import com.example.team5project.domain.storefilter.entity.Store;
 import com.example.team5project.domain.storefilter.repository.StoreQueryRepository;
+import com.example.team5project.domain.storefilter.status.StoreStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,5 +41,16 @@ public class StoreService {
                 .collect(Collectors.toList());
 
         return new StorePageResponse(content, nextCursorId, hasNext);
+    }
+
+    public List<StoreResponse> findStores(Integer rating, StoreStatus status) {
+        List<Store> findAll = storeQueryRepository.findAll(rating, status);
+        List<StoreResponse> dtos = new ArrayList<>();
+
+        for (Store store : findAll) {
+            dtos.add(new StoreResponse(store.getId(), store.getName(), store.getRating(), store.getStatus(), store.getMonitoringDate()));
+        }
+
+        return dtos;
     }
 }
