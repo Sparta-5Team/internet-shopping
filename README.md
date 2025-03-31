@@ -49,39 +49,11 @@
 </details>
 
 <details>
-  <summary><b>메뉴,메뉴 카테고리,관리자 대시보드</b></summary>
+  <summary><b>필터 검색</b></summary>
   <br/>
   <div>
-      ![image](https://github.com/user-attachments/assets/3b048340-72a8-4cc9-9724-c4604e1e2b79)
+      ![image](https://github.com/user-attachments/assets/b12663ee-d31c-40c0-92d3-f5afa2be876a)
   </div>
 </details>
 
-<details>
-  <summary><b>가게</b></summary>
-  <br/>
-  <div>
-    <image src="https://github.com/user-attachments/assets/6078b9af-fd67-4b53-9b2c-c9f4efdfa1de" width="80%"></image>
-    <image src="https://github.com/user-attachments/assets/3f733269-191d-4aeb-945b-88e7a14659e4" width="80%"></image>
-    
-  </div>
-</details>
-
-<details>
-  <summary><b>주문, 장바구니</b></summary>
-  <br/>
-  <div>
-    <image src="https://github.com/user-attachments/assets/99016396-8f21-472b-8d75-91a625b64839" width="80%"></image>
-    <image src="https://github.com/user-attachments/assets/7c58efc1-5eb0-4a9b-870e-9dc2b7b78fbb" width="80%"></image>
-    <image src="https://github.com/user-attachments/assets/6f1c254d-6ff1-46b6-9937-702253bb8b26" width="80%"></image>
-    <image src="https://github.com/user-attachments/assets/e7bd3edd-f5bc-40c4-b1f2-40df58ba4ba1" width="80%"></image>
-  </div>
-</details>
-
-<details>
-  <summary><b>리뷰</b></summary>
-  <br/>
-  <div>
-    <image src="https://github.com/user-attachments/assets/b5e5349e-9fe9-430e-96e4-ed39f4c66ca3" width="80%"></image>
-  </div>
-</details>
 
